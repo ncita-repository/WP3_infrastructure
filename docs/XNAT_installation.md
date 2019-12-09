@@ -17,4 +17,4 @@ PSQL (PostgreSQL) | 9.6.15 | apt
 Tomcat 7 | 7.0.96 | From .tar.gz
 
 _Tip_: lsb_release command prints out LSB (Linux Standard Base) and Distribution information. Example usage: 
-![](/images/lsb.png)
+<img src="./images/lsb.png" width="350" height="100">
