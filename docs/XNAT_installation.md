@@ -67,7 +67,7 @@ This should make it possible to reach http://localhost:8080
 _Tip_: make sure port 8080 is open!   
 <img src="./images/tomcat7.png" width="500" height="400">    
 
-** XNAT **  
+**XNAT**  
 
 Create XNAT folders   
 ```sudo mkdir /data/  
@@ -119,7 +119,7 @@ _Tip_: Dont forget to create the xnat-conf.properties file! (like default versio
 _Tip_: For newer versions of XNAT, use git clone (you might run into problems if you try through api.bitbucket.org):  
 _git clone git@bitbucket.org:xnatdemo/demo_war.git_ or _git clone https://bitbucket.org/xnatdemo/demo_war.git_  should get the latest 1.7.6 at the time of writing.  
 If the above worked, you should be able to reach your XNAT now in a web browser (I have tested Safari and Chrome) Should look like this, and have admin/admin login keys to start with. _Note_: the first time it might take a while to load in the web browser, as Tomcat is deploying it for the first time.   
-<img src="./images/xnat.png" width="350" height="300">
+<img src="./images/xnat.png" width="500" height="300">
 
 **Install the pipeline**  
 Instructions [here](https://wiki.xnat.org/documentation/getting-started-with-xnat/installing-the-pipeline-engine). _Note_: you can still access your XNAT without installing the pipeline, but you will see an error message on the top complaining about the pipeline path not found.   
@@ -137,7 +137,8 @@ smtpServer=smtp.hermes.cam.ac.uk
 destination=/data/xnat/pipeline
 ```
 Then do 
-```./gradlew 
+```
+./gradlew 
 ```
 _Tip_: gradlew needs to create directories and copy files, so you might need to run it as sudo (if you see some errors e.g. <q>> Task :copyBuildInfo FAILED<q>)  
 _Note_: Making xnat as user owner of the different folders, e.g. _chown -R xnat:xnat /data_ fails for me, however it doesnt seem to be mandatory as the rest of the installation works fine.  
@@ -148,16 +149,16 @@ _Note_: Making xnat as user owner of the different folders, e.g. _chown -R xnat:
 
 **2.1 First time configuration**  
 When you login for the first time, you will be asked to change certain things (like admin/admin)   
-<img src="./images/xnat1.png" width="350" height="300">  
+<img src="./images/xnat1.png" width="500" height="300">  
 Make changes to the site setup, such as admin email, stmp, url. Then click on admin (top right, Logged in as: admin) and change email and password:  
-<img src="./images/xnat2.png" width="350" height="300">  
+<img src="./images/xnat2.png" width="500" height="300">  
 _Tip_: Check you have a Mail User Agent install (e.g. exim4 and postfix) and this [post] (https://kifarunix.com/configure-postfix-to-use-gmail-smtp-on-ubuntu-18-04/) by Rick Herrick, XNAT team, in Google groups gives some tips.   
 Once you register, then log in as a user, create a new project, and try to upload some images, for example by downloading and using XNAT Upload Assistant.   
-<img src="./images/xnat3.png" width="350" height="300">   
-<img src="./images/xnat4.png" width="350" height="250">   
+<img src="./images/xnat3.png" width="500" height="300">   
+<img src="./images/xnat4.png" width="500" height="250">   
 
 
-# **3.- USEFUL LINKS AND REFERENCES **  
+# **3.- USEFUL LINKS AND REFERENCES**  
 Google groups forum (xnat_discussion) where people ask questions to the xnat team and community: https://groups.google.com/forum/#!forum/xnat_discussion    
 
 
