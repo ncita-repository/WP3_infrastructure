@@ -33,15 +33,15 @@ Run _sudo apt install openjdk-8-jdk_
 This will install a number of packages, amongst which you can find also openjdk-8-jre  
 _Tip_: Use completion tab to see which packages are available.   
 If all goes well, you can check if java is installed:   
-<img src="./images/java.png" width="350" height="100">	
+<img src="./images/java.png" width="450" height="75">	
 
 **- PostgreSQL**
 Use instructions [here](https://www.postgresql.org/download/linux/debian/)  
-<img src="./images/psql.png" width="500" height="200">  
+<img src="./images/psql.png" width="700" height="300">  
 _Tip_: The website above says that “Debian includes PostgreSQL by default”. In my case however, in my server this didn’t seem to be the case. You can check by requesting the version _psql --version_  
 _Tip_: The website above also says that version 11 should be available with apt, however it might not be the case (make sure you do _sudo apt update_ before trying!)  
-From XNAT installation page: <q>strongly recommend installing XNAT 1.7 on 9.4 or later from the start<q> - So I decided to use the latest version available with apt (remember the tab completion!) that turned out to be in my case 9.6. Check which versions are compatible with your distribution in the website above: 
-<img src="./images/psql_versions.png" width="300" height="200">  
+From XNAT installation page: <q>strongly recommend installing XNAT 1.7 on 9.4 or later from the start<q> - So I decided to use the latest version available with apt (remember the tab completion!) that turned out to be in my case 9.6. Check which versions are compatible with your distribution in the website above:   
+<img src="./images/psql_versions.png" width="500" height="200">  
 Although not publicised to work with Debian 9, I testify PSQL 9.6 worked for me.  
 Run: _sudo apt install postgresql-9.6_  
 If it all worked fine, now you should be able to check the version now.  
@@ -50,25 +50,25 @@ If it all worked fine, now you should be able to check the version now.
 _Note_: You might find that only Tomcat 8 seems available with APT. Please notice the XNAT team warning: <q>We have had some success running under Tomcat 8, but there are known issues with some combinations of different versions of the JDK and Tomcat 8 that we have not been able to fully pin down. Running under Tomcat 8 is possible but is at your own risk until we can fully test and quantify the issues on that platform.<q> In my case, I run into troubles with Tomcat 8 when I first tried (it might have been my fault, but to ping it down is still to be done). So this is how I finally installed Tomcat 7. 
 _Note_: Installing it in this way makes things slightly different than expected (from documentation), still to be seen no problems arise later! Reason is there will be nothing in /var/lib or /usr/share and no _service tomcat7 start_ or _service tomcat7 stop_ is possible, instead you can use _sudo /opt/tomcat7/bin/startup.sh_ or _sudo /opt/tomcat7/bin/shutdown.sh_  
 Following documentation like for example [here](https://tecadmin.net/install-tomcat-7-on-ubuntu/), I installed it by downloading the tar.gz file from [this link](https://tomcat.apache.org/download-70.cgi)  
-Run:   
+**Run:**   
 _cd /opt/_  
 _sudo wget http://apache.mirrors.nublue.co.uk/tomcat/tomcat-7/v7.0.96/bin/apache-tomcat-7.0.96.tar.gz_  
 _sudo tar -zxvf apache-tomcat-7.0.96.tar.gz_  
 _sudo mv apache-tomcat-7.0.96 tomcat7_  
-Configure:  
+**Configure:**  
 _echo "export CATALINA_HOME="/opt/tomcat7"" >> ~/.bashrc_  
 _source ~/.bashrc_  
-Test:  
+**Test:**  
 _cd tomcat7/bin/_  
 _sudo ./startup.sh_  
-<img src="./images/tomcat_startup.png" width="300" height="200">  
+<img src="./images/tomcat_startup.png" width="600" height="200">  
 This should make it possible to reach http://localhost:8080   
 _Tip_: make sure port 8080 is open!   
-<img src="./images/tomcat7.png" width="350" height="300">  
+<img src="./images/tomcat7.png" width="500" height="400">    
 
 ** XNAT **  
 
-Create XNAT folders   
+**Create XNAT folders**   
 _sudo mkdir /data/_  
 _sudo mkdir /data/xnat_  
 _sudo mkdir /data/xnat/home_  
@@ -81,13 +81,13 @@ _sudo mkdir /data/xnat/home/config_
 _sudo mkdir /data/xnat/home/logs_  
 _sudo mkdir /data/xnat/home/plugins_  
 _sudo mkdir /data/xnat/home/work_  
-Configure PSQL, create user and database for xnat:  
-_sudo su - postgres -c <q>createuser -D xnat<q>_    
-_sudo su - postgres -c <q>createdb -O xnat xnat<q>_    
-_sudo su - postgres -c <q>psql -c \<q>ALTER USER xnat WITH PASSWORD 'xnat'\<q>_  
-Configure Tomcat to find /xnat/home   
-_CATALINA_OPTS=<q>${CATALINA_OPTS} -Dxnat.home=/data/xnat/home<q>_  
-_JAVA_OPTS=<q>${JAVA_OPTS} -Dxnat.home=/data/xnat/home<q>_  
+**Configure PSQL, create user and database for xnat:**  
+_sudo su - postgres -c "createuser -D xnat"_    
+_sudo su - postgres -c "createdb -O xnat xnat"_    
+_sudo su - postgres -c "psql -c \"ALTER USER xnat WITH PASSWORD 'xnat'"_  
+**Configure Tomcat to find /xnat/home**   
+_CATALINA_OPTS="${CATALINA_OPTS} -Dxnat.home=/data/xnat/home"_  
+_JAVA_OPTS="${JAVA_OPTS} -Dxnat.home=/data/xnat/home"_  
 
 _Tip_: In my case, I learnt that my catalina/java environmental options get cleaned up every time I shutdown and start tomcat. The way to avoid this is to edit or create bin/setenv.sh. Mine is very simple to start with, it only contains:   
 ``` #!/bin/bash                                                                                                                                                                                                                                     
@@ -95,7 +95,8 @@ CATALINA_OPTS="${CATALINA_OPTS} -Dxnat.home=/data/xnat/home"
 JAVA_OPTS="${JAVA_OPTS} -Dxnat.home=/data/xnat/home"
  
 CATALINA_OPTS="${CATALINA_OPTS} -Xms512m -Xmx1024m -XX:MaxPermSize=256m"
-JAVA_OPTS="${JAVA_OPTS} -Xms512m -Xmx512m" ```
+JAVA_OPTS="${JAVA_OPTS} -Xms512m -Xmx512m" 
+```
 
 Get a WAR XNAT file in the Tomcat webapps folder. For example:   
 ```cd /opt/tomcat7/webapps/  
